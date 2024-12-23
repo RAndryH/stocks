@@ -53,4 +53,13 @@ export class UsersService {
         }
         return this.usersModel.findByIdAndDelete(id).exec();
     }
+
+    async findByEmail(email: string): Promise<Users> {
+        const user = this.usersModel.findOne()
+        if (!user) {
+            throw new Error('Email does not exists')
+        }
+
+        return this.usersModel.findOne().exec()
+    }
 }

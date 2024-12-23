@@ -11,7 +11,7 @@ import { Users, UsersSchema } from './users.schema';
         name: Users.name,
         schema: UsersSchema,
       },
-    ]), 
+    ])
   ],
   controllers: [UsersController],
   providers: [UsersService]
