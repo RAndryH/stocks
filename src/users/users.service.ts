@@ -12,7 +12,7 @@ export class UsersService {
 
     async create(user: Users): Promise<Users> {
         const password = user.password;
-        const salt = bcrypt.genSaltSync(10);
+        const salt = bcrypt.genSaltSync(parseInt(process.env.SALT_ROUNDS, 10));
         const hash = bcrypt.hashSync(password, salt);
         let newUser = new Users();
         newUser.password = hash;

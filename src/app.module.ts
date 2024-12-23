@@ -9,13 +9,9 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV || 'dev'}` }),
     UsersModule,
-    MongooseModule.forRoot(`${process.env.DATABASE_URL}`) // mongodb+srv://randryh:xrLsLv7Nwn7q0YyD@cluster0.xjaop.mongodb.net/StocksNestJs_db  // 'mongodb://localhost:27017/StocksNestJs_db'
+    MongooseModule.forRoot(`${process.env.DATABASE_URL}`)
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { 
-  constructor() {
-    console.log(`process.env.DATABASE_URL: ${process.env.DATABASE_URL}`);
-  }
-}
+export class AppModule { }
