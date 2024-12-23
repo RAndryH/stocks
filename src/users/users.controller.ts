@@ -30,5 +30,9 @@ export class UsersController {
     async remove(@Param('id') id: string): Promise<IUsers> {
         return this.usersService.remove(id);
     }
-    
+
+    @Get('email/:email')
+    async findByEmail(@Param('email') email: string): Promise<IUsers> {
+        return this.usersService.findByEmail(email);
+    }
 }
