@@ -35,4 +35,9 @@ export class UsersController {
     async findByEmail(@Param('email') email: string): Promise<IUsers> {
         return this.usersService.findByEmail(email);
     }
+
+    @Post('changestatus')
+    async changeStatus(@Body() body: any): Promise<IUsers> {
+        return this.usersService.changeUserStatus(body._id, body.status)
+    }
 }

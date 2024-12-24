@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Users, UsersDocument } from './users.schema';
-import * as bcrypt from 'bcrypt';
+import { encryptStr } from 'src/functions/global';
 
 @Injectable()
 export class UsersService {
@@ -12,10 +12,8 @@ export class UsersService {
 
     async create(user: Users): Promise<Users> {
         const password = user.password;
-        const salt = bcrypt.genSaltSync(parseInt(process.env.SALT_ROUNDS, 10));
-        const hash = bcrypt.hashSync(password, salt);
         let newUser = new Users();
-        newUser.password = hash;
+        newUser.password = await encryptStr(password);
         newUser.username = user.username;
         newUser.email = user.email;
         newUser.created_by = user.created_by;
@@ -60,5 +58,13 @@ export class UsersService {
             throw new Error('Email not found');
         }
         return findEmail;
+    }
+
+    async changePassword(email: string, newPassword: string): Promise<Users> {
+        return await this.usersModel.findOneAndUpdate({email: email}, {password: newPassword})
+    }
+
+    async changeUserStatus(id: string, status: Boolean): Promise<Users> {
+        return await this.usersModel.findByIdAndUpdate(id, {is_active: status}, { new: true})
     }
 }
